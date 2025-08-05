@@ -12,7 +12,7 @@ const path = require('path');
 class AutoGit {
   constructor() {
     this.repository = 'https://github.com/devnish23/documentum.git';
-    this.branch = 'main';
+    this.branch = 'master';
   }
 
   /**
