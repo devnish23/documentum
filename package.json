@@ -46,7 +46,12 @@
     "universal:npm": "node scripts/universal-no-prompt.js npm",
     "universal:git": "node scripts/universal-no-prompt.js git",
     "universal:python": "node scripts/universal-no-prompt.js python",
-    "universal:playwright": "node scripts/universal-no-prompt.js playwright"
+    "universal:playwright": "node scripts/universal-no-prompt.js playwright",
+    "auto-continue:workflow": "node scripts/auto-continue.js workflow",
+    "auto-continue:npm": "node scripts/auto-continue.js npm",
+    "auto-continue:git": "node scripts/auto-continue.js git",
+    "auto-continue:python": "node scripts/auto-continue.js python",
+    "auto-continue:playwright": "node scripts/auto-continue.js playwright"
   },
   "keywords": [
     "python",
