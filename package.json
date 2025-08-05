@@ -58,7 +58,20 @@
     "final:python": "node scripts/final-no-prompt.js python",
     "final:playwright": "node scripts/final-no-prompt.js playwright",
     "test:no-prompt": "node scripts/simple-test.js",
-    "test:comprehensive": "node scripts/comprehensive-test.js"
+    "test:comprehensive": "node scripts/comprehensive-test.js",
+    "terminal:auto-continue": "node scripts/terminal-auto-continue.js",
+    "terminal:test": "node scripts/terminal-auto-continue.js test",
+    "terminal:workflow": "node scripts/terminal-auto-continue.js workflow",
+    "terminal:git": "node scripts/terminal-auto-continue.js git",
+    "terminal:npm": "node scripts/terminal-auto-continue.js npm",
+    "terminal:python": "node scripts/terminal-auto-continue.js python",
+    "terminal:playwright": "node scripts/terminal-auto-continue.js playwright",
+    "powershell:auto-continue": "powershell -ExecutionPolicy Bypass -File scripts/auto-continue.ps1",
+    "powershell:git": "powershell -ExecutionPolicy Bypass -File scripts/auto-continue.ps1 -Mode git",
+    "powershell:npm": "powershell -ExecutionPolicy Bypass -File scripts/auto-continue.ps1 -Mode npm",
+    "powershell:python": "powershell -ExecutionPolicy Bypass -File scripts/auto-continue.ps1 -Mode python",
+    "powershell:playwright": "powershell -ExecutionPolicy Bypass -File scripts/auto-continue.ps1 -Mode playwright",
+    "powershell:workflow": "powershell -ExecutionPolicy Bypass -File scripts/auto-continue.ps1 -Mode workflow"
   },
   "keywords": [
     "python",
