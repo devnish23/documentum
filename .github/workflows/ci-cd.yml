@@ -38,7 +38,7 @@ jobs:
       - name: Run automated development tasks
         run: |
           echo "Starting automated development phase..."
-          npm run build
+          npm run workflow:no-intervention
           echo "Development phase completed automatically"
 
   # Documentation Phase
