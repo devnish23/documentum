@@ -22,7 +22,15 @@
     "auto-heal": "node scripts/auto-heal.js",
     "monitor": "node scripts/monitor.js",
     "backup": "node scripts/backup.js",
-    "health-check": "node scripts/health-check.js"
+    "health-check": "node scripts/health-check.js",
+    "git:auto": "node scripts/auto-git.js",
+    "git:setup": "node scripts/auto-git.js setup",
+    "git:commit": "node scripts/auto-git.js commit",
+    "git:push": "node scripts/auto-git.js push",
+    "git:workflow": "node scripts/auto-git.js workflow",
+    "workflow:auto": "node scripts/auto-workflow.js",
+    "workflow:no-intervention": "node scripts/auto-workflow.js --no-intervention",
+    "dev:auto": "npm run workflow:no-intervention"
   },
   "keywords": [
     "python",
