@@ -51,7 +51,12 @@
     "auto-continue:npm": "node scripts/auto-continue.js npm",
     "auto-continue:git": "node scripts/auto-continue.js git",
     "auto-continue:python": "node scripts/auto-continue.js python",
-    "auto-continue:playwright": "node scripts/auto-continue.js playwright"
+    "auto-continue:playwright": "node scripts/auto-continue.js playwright",
+    "final:workflow": "node scripts/final-no-prompt.js workflow",
+    "final:npm": "node scripts/final-no-prompt.js npm",
+    "final:git": "node scripts/final-no-prompt.js git",
+    "final:python": "node scripts/final-no-prompt.js python",
+    "final:playwright": "node scripts/final-no-prompt.js playwright"
   },
   "keywords": [
     "python",
