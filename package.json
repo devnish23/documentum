@@ -30,7 +30,8 @@
     "git:workflow": "node scripts/auto-git.js workflow",
     "workflow:auto": "node scripts/auto-workflow.js",
     "workflow:no-intervention": "node scripts/auto-workflow.js --no-intervention",
-    "dev:auto": "npm run workflow:no-intervention"
+    "dev:auto": "npm run workflow:no-intervention",
+    "demo": "node scripts/demo-automation.js"
   },
   "keywords": [
     "python",
