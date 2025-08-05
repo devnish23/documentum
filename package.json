@@ -36,7 +36,17 @@
     "terminal:npm": "node scripts/auto-terminal.js npm",
     "terminal:git": "node scripts/auto-terminal.js git",
     "terminal:python": "node scripts/auto-terminal.js python",
-    "terminal:playwright": "node scripts/auto-terminal.js playwright"
+    "terminal:playwright": "node scripts/auto-terminal.js playwright",
+    "no-prompt:workflow": "node scripts/no-prompt-executor.js workflow",
+    "no-prompt:npm": "node scripts/no-prompt-executor.js npm",
+    "no-prompt:git": "node scripts/no-prompt-executor.js git",
+    "no-prompt:python": "node scripts/no-prompt-executor.js python",
+    "no-prompt:playwright": "node scripts/no-prompt-executor.js playwright",
+    "universal:workflow": "node scripts/universal-no-prompt.js workflow",
+    "universal:npm": "node scripts/universal-no-prompt.js npm",
+    "universal:git": "node scripts/universal-no-prompt.js git",
+    "universal:python": "node scripts/universal-no-prompt.js python",
+    "universal:playwright": "node scripts/universal-no-prompt.js playwright"
   },
   "keywords": [
     "python",
