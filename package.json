@@ -31,7 +31,12 @@
     "workflow:auto": "node scripts/auto-workflow.js",
     "workflow:no-intervention": "node scripts/auto-workflow.js --no-intervention",
     "dev:auto": "npm run workflow:no-intervention",
-    "demo": "node scripts/demo-automation.js"
+    "demo": "node scripts/demo-automation.js",
+    "terminal:auto": "node scripts/auto-terminal.js workflow",
+    "terminal:npm": "node scripts/auto-terminal.js npm",
+    "terminal:git": "node scripts/auto-terminal.js git",
+    "terminal:python": "node scripts/auto-terminal.js python",
+    "terminal:playwright": "node scripts/auto-terminal.js playwright"
   },
   "keywords": [
     "python",

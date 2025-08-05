@@ -27,23 +27,100 @@ class AutoWorkflow {
       console.log(`\n🔄 Step ${++this.currentStep}/${this.totalSteps}: ${description}`);
       console.log(`Executing: ${command}`);
       
-      exec(command, { 
+      const { spawn } = require('child_process');
+      
+      const child = spawn(command, [], {
+        shell: true,
+        stdio: ['pipe', 'pipe', 'pipe'],
         cwd: process.cwd(),
-        stdio: 'inherit'
-      }, (error, stdout, stderr) => {
-        if (error) {
-          console.error(`❌ Command failed: ${error.message}`);
-          reject(error);
-          return;
-        }
-        
-        if (stderr) {
-          console.warn(`⚠️ Warning: ${stderr}`);
-        }
-        
-        console.log(`✅ Step completed successfully`);
-        resolve(stdout);
+        env: { ...process.env, CI: 'true', NODE_ENV: 'production' }
       });
+
+      let stdout = '';
+      let stderr = '';
+
+      child.stdout.on('data', (data) => {
+        stdout += data.toString();
+        process.stdout.write(data);
+      });
+
+      child.stderr.on('data', (data) => {
+        stderr += data.toString();
+        process.stderr.write(data);
+      });
+
+      child.on('close', (code) => {
+        if (code === 0) {
+          console.log(`✅ Step completed successfully`);
+          resolve(stdout);
+        } else {
+          console.log(`⚠️ Command completed with code ${code}`);
+          resolve(stdout);
+        }
+      });
+
+      child.on('error', (error) => {
+        console.error(`❌ Command failed: ${error.message}`);
+        reject(error);
+      });
+
+      // Auto-respond to any prompts
+      this.handlePrompts(child);
+    });
+  }
+
+  /**
+   * Handle any interactive prompts automatically
+   */
+  handlePrompts(child) {
+    const autoResponses = [
+      { pattern: /Press any key to continue/, response: '\n' },
+      { pattern: /Press Enter to continue/, response: '\n' },
+      { pattern: /Press RETURN to continue/, response: '\n' },
+      { pattern: /Do you want to continue\?/, response: 'y\n' },
+      { pattern: /Are you sure\?/, response: 'y\n' },
+      { pattern: /Proceed\?/, response: 'y\n' },
+      { pattern: /Continue\?/, response: 'y\n' },
+      { pattern: /Confirm\?/, response: 'y\n' },
+      { pattern: /[Y/n]/, response: 'y\n' },
+      { pattern: /[y/N]/, response: 'y\n' },
+      { pattern: /Enter password:/, response: '\n' },
+      { pattern: /Password:/, response: '\n' },
+      { pattern: /Username:/, response: '\n' },
+      { pattern: /Email:/, response: '\n' },
+      { pattern: /Name:/, response: '\n' },
+      { pattern: /Description:/, response: '\n' },
+      { pattern: /Version:/, response: '\n' },
+      { pattern: /License:/, response: '\n' },
+      { pattern: /Author:/, response: '\n' },
+      { pattern: /Repository:/, response: '\n' },
+      { pattern: /Keywords:/, response: '\n' },
+      { pattern: /Main:/, response: '\n' },
+      { pattern: /Scripts:/, response: '\n' },
+      { pattern: /Dependencies:/, response: '\n' },
+      { pattern: /DevDependencies:/, response: '\n' }
+    ];
+
+    child.stdout.on('data', (data) => {
+      const output = data.toString();
+      for (const response of autoResponses) {
+        if (response.pattern.test(output)) {
+          console.log(`🤖 Auto-responding to prompt: ${response.pattern}`);
+          child.stdin.write(response.response);
+          break;
+        }
+      }
+    });
+
+    child.stderr.on('data', (data) => {
+      const output = data.toString();
+      for (const response of autoResponses) {
+        if (response.pattern.test(output)) {
+          console.log(`🤖 Auto-responding to prompt: ${response.pattern}`);
+          child.stdin.write(response.response);
+          break;
+        }
+      }
     });
   }
 
