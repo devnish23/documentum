@@ -56,7 +56,9 @@
     "final:npm": "node scripts/final-no-prompt.js npm",
     "final:git": "node scripts/final-no-prompt.js git",
     "final:python": "node scripts/final-no-prompt.js python",
-    "final:playwright": "node scripts/final-no-prompt.js playwright"
+    "final:playwright": "node scripts/final-no-prompt.js playwright",
+    "test:no-prompt": "node scripts/simple-test.js",
+    "test:comprehensive": "node scripts/comprehensive-test.js"
   },
   "keywords": [
     "python",
