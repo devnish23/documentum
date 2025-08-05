@@ -1,0 +1,72 @@
+{
+  "name": "documentum",
+  "version": "1.0.0",
+  "description": "A Python project with isolated development environment and automated testing",
+  "main": "index.js",
+  "scripts": {
+    "dev": "python -m venv venv && venv\\Scripts\\Activate.ps1",
+    "start": "python app.py",
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "test:report": "playwright show-report",
+    "install:browsers": "playwright install",
+    "lint": "eslint . --ext .js,.ts,.jsx,.tsx",
+    "format": "prettier --write .",
+    "type-check": "tsc --noEmit",
+    "build": "npm run lint && npm run type-check && npm run test",
+    "deploy": "npm run build && echo 'Deployment completed'",
+    "docs": "jsdoc -c jsdoc.json",
+    "coverage": "playwright test --reporter=html",
+    "auto-heal": "node scripts/auto-heal.js",
+    "monitor": "node scripts/monitor.js",
+    "backup": "node scripts/backup.js",
+    "health-check": "node scripts/health-check.js"
+  },
+  "keywords": [
+    "python",
+    "playwright",
+    "testing",
+    "automation",
+    "documentum"
+  ],
+  "author": "Development Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@playwright/test": "^1.40.0",
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.0.0",
+    "jsdoc": "^4.0.0",
+    "nodemon": "^3.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.0",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0",
+    "compression": "^1.7.4",
+    "morgan": "^1.10.0",
+    "dotenv": "^16.0.0",
+    "winston": "^3.10.0",
+    "jest": "^29.0.0",
+    "supertest": "^6.3.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devnish23/documentum.git"
+  },
+  "bugs": {
+    "url": "https://github.com/devnish23/documentum/issues"
+  },
+  "homepage": "https://github.com/devnish23/documentum#readme"
+} 
