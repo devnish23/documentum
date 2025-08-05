@@ -6,7 +6,7 @@ A Python project with isolated development environment.
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/documentum.git
+   git clone https://github.com/devnish23/documentum.git
    cd documentum
    ```
 
