@@ -1,0 +1,179 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String   @id @default(cuid())
+  phone             String   @unique
+  email             String?
+  name              String
+  profileImage      String?
+  preferredLanguage String   @default("en")
+  createdAt         DateTime @default(now())
+  lastActiveAt      DateTime @default(now())
+  isVerified        Boolean  @default(false)
+
+  // Relations
+  families          FamilyMember[]
+  addedItems        InventoryItem[] @relation("AddedBy")
+  createdOrders     Order[]         @relation("CreatedBy")
+
+  @@map("users")
+}
+
+model Family {
+  id          String   @id @default(cuid())
+  name        String
+  inviteCode  String   @unique
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  ownerId     String
+
+  // Relations
+  owner       User             @relation(fields: [ownerId], references: [id])
+  members     FamilyMember[]
+  inventory   InventoryItem[]
+  merchants   Merchant[]
+  orders      Order[]
+  notifications Notification[]
+
+  @@map("families")
+}
+
+model FamilyMember {
+  id        String   @id @default(cuid())
+  familyId  String
+  userId    String
+  role      String   @default("member") // owner, admin, member
+  joinedAt  DateTime @default(now())
+  isActive  Boolean  @default(true)
+
+  // Relations
+  family    Family @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([familyId, userId])
+  @@map("family_members")
+}
+
+model InventoryItem {
+  id          String   @id @default(cuid())
+  familyId    String
+  name        String
+  barcode     String?
+  quantity    Decimal  @default(0)
+  unit        String   @default("pieces")
+  category    String
+  expiryDate  DateTime?
+  imageUrl    String?
+  addedBy     String
+  notes       String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  family      Family @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  addedByUser User   @relation("AddedBy", fields: [addedBy], references: [id])
+  orderItems  OrderItem[]
+
+  @@map("inventory_items")
+}
+
+model Merchant {
+  id          String   @id @default(cuid())
+  familyId    String
+  name        String
+  type        String
+  phone       String?
+  email       String?
+  address     Json?
+  categories  String[]
+  rating      Decimal?
+  notes       String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  family      Family @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  orders      Order[]
+
+  @@map("merchants")
+}
+
+model Order {
+  id             String      @id @default(cuid())
+  familyId       String
+  merchantId     String?
+  status         String      @default("pending")
+  notes          String?
+  estimatedTotal Decimal?
+  actualTotal    Decimal?
+  createdBy      String
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  completedAt    DateTime?
+
+  // Relations
+  family         Family      @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  merchant       Merchant?   @relation(fields: [merchantId], references: [id])
+  createdByUser  User        @relation("CreatedBy", fields: [createdBy], references: [id])
+  items          OrderItem[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id               String   @id @default(cuid())
+  orderId          String
+  inventoryItemId  String?
+  name             String
+  quantity         Decimal
+  unit             String
+  notes            String?
+
+  // Relations
+  order            Order           @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  inventoryItem    InventoryItem?  @relation(fields: [inventoryItemId], references: [id])
+
+  @@map("order_items")
+}
+
+model Notification {
+  id          String   @id @default(cuid())
+  familyId    String
+  type        String
+  title       String
+  message     String
+  data        Json?
+  recipients  String[]
+  sentAt      DateTime @default(now())
+
+  // Relations
+  family      Family @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  reads       NotificationRead[]
+
+  @@map("notifications")
+}
+
+model NotificationRead {
+  id             String       @id @default(cuid())
+  notificationId String
+  userId         String
+  readAt         DateTime     @default(now())
+
+  // Relations
+  notification   Notification @relation(fields: [notificationId], references: [id], onDelete: Cascade)
+
+  @@unique([notificationId, userId])
+  @@map("notification_reads")
+} 
